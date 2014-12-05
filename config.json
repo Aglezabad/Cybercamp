@@ -1,0 +1,32 @@
+{
+	"app":{
+		"name": "CyberCamp Project",
+		"port": 5555
+	},
+	"locale":{
+		"catalog": ["en", "es"],
+		"default": "en",
+		"cookie": "cybercamp_i18n",
+		"prefix": "cybercamp-i18n-",
+		"directory": "./i18n"
+	},
+	"session":{
+		"name": "cybercamp.sid",
+		"route": "mongodb://localhost/cybercamp_sessions",
+		"secret": "rd6yu7678regujfh9269"
+	},
+	"database":{
+		"route": "mongodb://localhost/cybercamp",
+		"options": {}
+	},
+	"routes":{
+		"prefix": "cc-",
+		"static": "./public",
+		"less": "./public"
+	},
+	"custom":{
+		"separator": " | ",
+		"favicon": "/icons/favicon.ico",
+		"appleicon": "/icon/appleicon.png"
+	}
+}

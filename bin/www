@@ -5,7 +5,62 @@ var config = require('../config.json');
 
 app.set('port', process.env.PORT || config.app.port || 5555);
 
+// Web interna de gestion
 var server = app.listen(app.get('port'), function() {
   debug('Express server listening on port ' + server.address().port);
 });
+
+// Proxy HTTP
+var httpProxy = require('http-proxy');
+var http = require('http');
+var proxy = httpProxy.createProxyServer({});
+var server = http.createServer(function(req, res) {
+	var auth = req.headers['authorization']; // auth is in base64(username:password) so we need to decode the base64
+	console.log("Authorization Header is: ", auth);
+	 
+	if(!auth) { 
+		res.statusCode = 401;
+		res.setHeader('WWW-Authenticate', 'Basic realm="Secure Area"');
+		res.end('<html><body>Need some creds son</body></html>');
+	} else if(auth) { 
+		var tmp = auth.split(' '); // Split on a space, the original auth looks like "Basic Y2hhcmxlczoxMjM0NQ==" and we need the 2nd part
+		var buf = new Buffer(tmp[1], 'base64'); // create a buffer and tell it the data coming in is base64
+		var plain_auth = buf.toString(); // read it back out as a string
+		 
+		console.log("Decoded Authorization ", plain_auth);
+		 
+		// At this point plain_auth = "username:password"
+		 
+		var creds = plain_auth.split(':'); // split on a ':'
+		var username = creds[0];
+		var password = creds[1];
+
+		if (username=="demo" && password=="demo") {
+			proxy.web(req, res, { target: 'http://cybercamp.es' });
+		} else {
+			res.statusCode = 401; // Force them to retry authentication
+			res.setHeader('WWW-Authenticate', 'Basic realm="Secure Area"');
+			res.end();
+		}
+		/* var User = require('../models/User');
+		User.findByUsername(username, function(err, user) {
+			if(!user){
+				res.statusCode = 401; // Force them to retry authentication
+				res.setHeader('WWW-Authenticate', 'Basic realm="Secure Area"');
+				res.end();
+				return
+			}
+			user.authenticate(password, function(err){
+				if(err){
+					console.log(err);
+				} else {
+					proxy.web(req, res, { target: 'http://gul.es' });
+				}
+			});
+		}); */
+	} 
+});
+
+debug("Proxy listening on port "+config.app.proxy_port)
+server.listen(config.app.proxy_port);
 

@@ -47,13 +47,18 @@ mongoose.connect(config.database.route, config.database.options || {});
 //App Setup
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true}));
 app.use(cookieParser());
 app.use(session({name: config.session.name, secret: config.session.secret, resave: false, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(require('less-middleware')(config.routes.less || "./public"));
 app.use(express.static(config.routes.static || "./public"));
+
+//PassportJS
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.use(i18n.init);
 
@@ -73,11 +78,6 @@ app.locals = {
         prefix: config.routes.prefix || "cc-"
     } 
 };
-
-//PassportJS
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
 
 //Routes
 app.use('/', index);
@@ -102,7 +102,7 @@ if (app.get('env') === 'development') {
         res.render('page_error', {
             title: err.message,
             message: err.message,
-            status: err.status,
+            status: err.status || 500,
             error: err,
             req: req
         });
@@ -115,7 +115,7 @@ app.use(function(err, req, res, next) {
     res.render('page_error', {
         title: err.message,
         message: err.message,
-        status: err.status,
+        status: err.status || 500,
         error: {},
         req: req
     });

@@ -15,8 +15,9 @@ var httpProxy = require('http-proxy');
 var http = require('http');
 var proxy = httpProxy.createProxyServer({});
 var server = http.createServer(function(req, res) {
+
 	proxy.web(req, res, { target: 'http://gul.es' });
-	
+
 	/* var auth = req.headers['authorization']; // auth is in base64(username:password) so we need to decode the base64
 	console.log("Authorization Header is: ", auth);
 	 
@@ -43,7 +44,7 @@ var server = http.createServer(function(req, res) {
 			res.statusCode = 401; // Force them to retry authentication
 			res.setHeader('WWW-Authenticate', 'Basic realm="Secure Area"');
 			res.end();
-		} */
+		}
 		/* var User = require('../models/User');
 		User.findByUsername(username, function(err, user) {
 			if(!user){
@@ -59,8 +60,8 @@ var server = http.createServer(function(req, res) {
 					proxy.web(req, res, { target: 'http://gul.es' });
 				}
 			});
-		}); */
-	} 
+		}); */ /*
+	} */
 });
 
 debug("Proxy listening on port "+config.app.proxy_port)

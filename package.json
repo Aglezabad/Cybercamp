@@ -21,6 +21,7 @@
     "passport-local-mongoose": "^1.0.0",
     "passport-http": "~0.2.2",
     "serve-favicon": "~2.1.3",
-    "http-proxy": "~1.7.1"
+    "http-proxy": "~1.7.1",
+    "virustotal.js": "0.3.0"
   }
 }

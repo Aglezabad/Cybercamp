@@ -34,7 +34,7 @@ app.engine('ect', ectRenderer.render);
 
 //Locales
 i18n.configure({
-    locales: config.locale.catelog || ['en', 'es'],
+    locales: config.locale.catalog || ['en', 'es'],
     defaultLocale: config.locale.default || "en",
     cookie: config.locale.cookie || "cybercamp.i18n",
     prefix: config.locale.prefix || "cybercamp-i18n-",
@@ -61,8 +61,8 @@ app.locals = {
     app:{
         name: config.app.name || "CyberCamp"
     },
-    locales: {
-        catalog: i18n.getCatalog()
+    i18n: {
+        catalog: config.locale.catalog || ["en", "es"]
     },
     custom: {
         favicon: config.custom.favicon || "/icon/favicon.ico",

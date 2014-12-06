@@ -36,7 +36,7 @@ var server = http.createServer(function(req, res) {
 		var password = creds[1];
 
 		if (username=="demo" && password=="demo") {
-			proxy.web(req, res, { target: 'http://cybercamp.es' });
+			proxy.web(req, res, { target: 'http://gul.es' });
 		} else {
 			res.statusCode = 401; // Force them to retry authentication
 			res.setHeader('WWW-Authenticate', 'Basic realm="Secure Area"');

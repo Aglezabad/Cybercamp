@@ -4,6 +4,7 @@ var passportLocalMongoose = require('passport-local-mongoose');
 
 var User = new Schema({
 	email: {type: String, required: true},
+	disphash: [String],
 	group: {type: Schema.ObjectId, ref: 'Group'},
 	contacts: [{type: Schema.ObjectId, ref: 'Contact'}],
 	logs: [{type: Schema.ObjectId, ref: 'Log'}],

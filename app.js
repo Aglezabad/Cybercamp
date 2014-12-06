@@ -103,7 +103,8 @@ if (app.get('env') === 'development') {
             title: err.message,
             message: err.message,
             status: err.status,
-            error: err
+            error: err,
+            req: req
         });
     });
 }
@@ -115,7 +116,8 @@ app.use(function(err, req, res, next) {
         title: err.message,
         message: err.message,
         status: err.status,
-        error: {}
+        error: {},
+        req: req
     });
 });
 

@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+var debug = require('debug')('Cybercamp');
+var app = require('../app');
+var config = require('../config.json');
+
+app.set('port', process.env.PORT || config.app.port || 5555);
+
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+

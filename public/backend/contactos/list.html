@@ -1,0 +1,20 @@
+
+<div class="container-fluid">
+    <h1 class="primary">Listado de Dispositivos</h1>
+    <input type="text" ng-model="regexp" class="form-control" placeholder="Busqueda" ng-keyup="search()"> <br>
+    <table  class="table table-striped container table-hover">
+        <tr>
+            <th>Nombre</th>
+            <th>Telefono</th>
+            <th>Email</th>
+        </tr>
+        <tr ng-repeat="contacto in contactos" class="animate">
+            <td>{{contacto.name}}</td>
+            <td>{{contacto.telephone}}</td>
+            <td>{{contacto.email}}</td>
+        </tr>
+    </table>
+
+
+
+</div>

@@ -3,6 +3,49 @@ var router = express.Router();
 var User = require("../models/User");
 var Log = require("../models/Log");
 
+router.post('/:username', function(req, res, next){
+	//Check session
+	if(!req.session.user){
+		var err = new Error("Forbidden.");
+		err.status = 403;
+		return next(err);
+	}
+	if((req.session.user.username !== req.params.username) && !req.session.user.groupAdmin){
+		var err = new Error("Forbidden.");
+		err.status = 403;
+		return next(err);
+	}
+
+	if(!req.body.uri && !req.body.status){
+		var err = new Error("Invalid request.");
+		err.status = 400;
+		return next(err);
+	} else if(!req.body.contacts){
+		// Create one contact
+		var json = {
+			"date": req.body.date,
+			"uri": req.body.uri,
+			"status": req.body.status
+		};
+	//	var log = JSON.parse(json);
+		// Create contact
+		var newLog = new Log(json);
+		newLog.save(function(err){
+			if(err){
+				return next(err);
+			}
+			User.update({username: req.params.username},{$push: { logs: newLog._id}}, function(err){
+				if(err){
+					return next(err);
+				}
+				return res.status(200).send({
+					ok: true,
+					message: "Log added to "+req.params.username
+				});
+			});
+		});
+	}
+});
 /* GET logs */
 router.get('/:username', function(req, res, next){
 	//Check session

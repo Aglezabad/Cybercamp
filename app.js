@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var session = require('express-session');
+var path = require('path');
 var MongoStore = require('connect-mongo')(session);
 
 //Config
@@ -41,8 +42,10 @@ mongoose.connect(config.database.route, config.database.options || {});
 app.locals = {
     routes: {
         prefix: config.routes.prefix || "cc-"
-    } 
+    }
 };
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Routes
 app.use('/'+app.locals.routes.prefix+'api', apiIndex);

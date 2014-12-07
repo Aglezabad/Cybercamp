@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="app">
+    <head>
+        <title>Backend</title>
+        <meta charset="UTF-8">
+
+        <link rel="stylesheet" href="../lib/font-awesome/css/fontawesome.css">
+        <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script type="text/javascript" src="../lib/angular/js/angular.js"></script>
+        <script type="text/javascript" src="../lib/angular/js/angular-route.js"></script>
+        <script type="text/javascript" src="../lib/angular/js/angular-animate.js"></script>
+        <script type="text/javascript" src="../lib/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="../lib/bootstrap/js/bootstrap.min.js"></script>
+
+
+        <script type="text/javascript" src="app.js"></script>
+        <script type="text/javascript" src="routes.js"></script>
+
+        <script type="text/javascript" src="accesos/list.js"></script>
+        <script type="text/javascript" src="accesos/routes.js"></script>
+
+        <script type="text/javascript" src="contactos/list.js"></script>
+        <script type="text/javascript" src="contactos/routes.js"></script>
+
+        <script type="text/javascript" src="filtros/list.js"></script>
+        <script type="text/javascript" src="filtros/routes.js"></script>
+
+    </head>
+    <body ng-controller="panelController">
+        <nav class="sidebar">
+            <a href="#/" ng-class="{
+                        active:isActive('/panel/')
+                    }"><i class="fa fa-dashboard"></i>Dashboard</a>
+            <a href="#/accesos" ng-class="{
+                        active:isActive('/accesos/')
+                    }"><i class="fa fa-send"></i>Registro de Accesos</a>
+            <a href="#/contactos" ng-class="{
+                        active:isActive('/contactos/')
+                    }"><i class="fa fa-mobile"></i> Usarios</a>
+            <a href="#/filtros" ng-class="{
+                        active:isActive('/filtros/')
+                    }"><i class="fa fa-filter"></i> Filtro</a>
+
+            <a href="#/acciones" ng-class="{
+                        active:isActive('/acciones/')
+                    }"><i class="fa fa-gear"></i> Acciones</a>
+                    <a ng-click="logout()"><i class="fa fa-sign-out"></i> Salir</a>
+
+        </nav>
+        <div ng-view class="wrap-body"></div>
+    </body>
+</html>

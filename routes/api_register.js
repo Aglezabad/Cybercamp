@@ -6,7 +6,7 @@ var User = require("../models/User");
 router.post('/', function(req, res, next){
 	// Input verification If email is formatted as email
 	// Username and password has no restrictions.
-	if(!/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(req.body.email)){
+	if(!/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(req.body.email)){
 		var err = new Error("Validation error: email introduced does not match with pattern.");
 		err.status = 400;
 		return next(err);

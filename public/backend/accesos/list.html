@@ -1,0 +1,17 @@
+
+<div class="container-fluid">
+    <h1 class="primary">Listado de accesos</h1>
+    <input type="text" ng-model="regexp" class="form-control" placeholder="Busqueda" ng-keyup="search()"> <br>
+    <table  class="table table-striped container table-hover">
+        <tr>
+            <th>Fecha</th>
+            <th>Url</th>
+            <th>Estado</th>
+        </tr>
+        <tr ng-repeat="acceso in accesos" class="animate">
+            <td>{{acceso.date}}</td>
+            <td>{{acceso.uri}}</td>
+            <td>{{acceso.status}}</td>
+        </tr>
+    </table>
+</div>

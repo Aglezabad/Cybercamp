@@ -1,48 +1,13 @@
 
 <div class="container-fluid">
-    <h1 class="primary">Listado de administradores</h1><button class="btn btn-primary pull-right" ng-click="crear()"><i class="fa fa-plus-square"></i> Crear</button>
-    <table  class="table table-striped container table-hover">
-        <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>DNI</th>
-            <th>Direccion</th>
-            <th>Telefono</th>
-            <th>Email</th>                
-            <th></th>                
-        </tr>
-        <tr ng-repeat="administador in administradores" class="animate">
-            <td>{{administador.id}}</td>
-            <td>{{administador.nombre}}</td>
-            <td>{{administador.apellidos}}</td>
-            <td>{{administador.dni}}</td>
-            <td>{{administador.direccion}}</td>
-            <td>{{administador.telefono}}</td>
-            <td>{{administador.email}}</td>            
-            <td><button type="button" class="btn btn-primary" ng-click="editar(administador)"><i class="fa fa-edit"></i></button>
-                <button type="button" class="btn btn-danger" ng-click="borrar(administador)" data-toggle="modal" data-target="#confirmModal">
-                    <i class="fa fa-trash-o"></i></button>
-            </td>            
-        </tr>
-    </table>
+    <h1 class="primary">Listado de administradores</h1>
 
-    <div class="modal fade" id="confirmModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title">Borrar Usuario</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Seguro quieres eliminar el administrador {{usuarioBorrar.id}} {{usuarioBorrar.nombre}}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-danger" ng-click="confirmBorrar()" data-dismiss="modal">Eliminar</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
+    <div class="row container-fluid">
+        <div class="col-md-6 container jumpbotron">
+            <h3 class="primary-text">Listado de contactos    <button class="btn primary"><i class="fa fa-refresh"></i></button></h3>
+        </div>
+        <div class="col-md-6 container ">
+            <h3 class="primary-text">Listado de aplicaciones <button class="btn primary"><i class="fa fa-refresh"></i></button></h3>
+        </div>
+    </div>
 </div>

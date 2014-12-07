@@ -5,26 +5,26 @@
  */
 
 
-app.provider("ListAdministradores", ListAdministradoresProvider);
+app.provider("ListAcciones", ListAccionesProvider);
 
-app.config(['baseUrl', 'ListAdministradoresProvider', function (baseUrl, ListAdministradoresProvider) {
-        ListAdministradoresProvider.setBaseUrl(baseUrl);
+app.config(['baseUrl', 'ListAccionesProvider', function (baseUrl, ListAccionesProvider) {
+        ListAccionesProvider.setBaseUrl(baseUrl);
     }]);
 
-app.controller("ListAdministradoresController", ['$scope', 'ListAdministradores', ListAdministradoresController]);
+app.controller("ListAccionesController", ['$scope', 'ListAcciones', ListAccionesController]);
 
 
-function ListAdministradoresProvider() {
+function ListAccionesProvider() {
     var _baseUrl = "";
     this.setBaseUrl = function (baseUrl) {
         _baseUrl = baseUrl;
     };
     this.$get = ['$http', function ($http) {
-            return new ListAdministradores($http, _baseUrl);
+            return new ListAcciones($http, _baseUrl);
         }];
 }
 
-function ListAdministradores($http, baseUrl) {
+function ListAcciones($http, baseUrl) {
     this.get = function (fnOk, fnError) {
         NProgress.start();
         $http({
@@ -54,36 +54,8 @@ function ListAdministradores($http, baseUrl) {
     }
 }
 
-function ListAdministradoresController($scope, ListAdministradores) {
-    ListAdministradores.get(
-            function (data, status) {
-                $scope.administradores = data;
-            },
-            function (data, status) {
-                alert(status + ": " + data);
-            }
-    );
-
-    $scope.borrar = function (administrador) {
-        $scope.administradorBorrar = administrador;
-    };
-
-    $scope.confirmBorrar = function () {
-        ListAdministradores.delete($scope.administradorBorrar.id,
-                function (data, status) {
-                    var id = getUserScoperId($scope, $scope.administradorBorrar.id);
-                    $scope.administradores.splice(id, 1);
-                },
-                function (data, status) {
-                    alert(status + ": " + data);
-                });
-    };
-    $scope.editar = function (userId) {
-        location.replace('#/administrador/update/' + userId.id);
-    };
-     $scope.crear = function () {
-        location.replace('#/administrador/insert/');
-    };
+function ListAccionesController($scope, ListAcciones) {
+  
 }
 
 

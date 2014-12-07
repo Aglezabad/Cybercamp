@@ -11,7 +11,7 @@ app.config(['baseUrl', 'ListAccesosProvider', function (baseUrl, ListAccesosProv
         ListAccesosProvider.setBaseUrl(baseUrl);
     }]);
 
-app.controller("ListAccesosController", ['$scope', 'ListAccesos', ListAccesosController]);
+app.controller("ListAccesosController", ['$scope', '$http', 'ListAccesos', ListAccesosController]);
 
 
 function ListAccesosProvider() {
@@ -38,7 +38,7 @@ function ListAccesos($http, baseUrl) {
 
 }
 
-function ListAccesosController($scope, ListAccesos) {
+function ListAccesosController($scope, $http, ListAccesos) {
   ListAccesos.get(
             function (data, status) {
                 $scope.accesos = data.logs;
@@ -47,5 +47,16 @@ function ListAccesosController($scope, ListAccesos) {
                 alert(status + ": " + data);
             }
     );
+
+    $scope.search = function(){
+      $http({
+        method: 'GET',
+        url: '/cc-api/logs/eslem/filter-regex/'+$scope.editText
+      }).success(function (data, status, headers, config) {
+        $scope.accesos = data.logs;
+      }).error(function (data, status, headers, config) {
+        alert(status + ": " + data);
+      });
+    };
 
 }

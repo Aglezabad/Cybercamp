@@ -123,6 +123,7 @@ router.get('/:username/filter-date/:date', function(req, res, next){
 //:regex checks URI!!!!
 router.get('/:username/filter-regex/:regex', function(req, res, next){
 	//Check session
+	var reg =req.params.regex;
 	if(!req.session.user){
 		var err = new Error("Forbidden.");
 		err.status = 403;
@@ -143,7 +144,7 @@ router.get('/:username/filter-regex/:regex', function(req, res, next){
 			}
 			var logArray = [];
 			for(var i=0; i<user.logs.length; i++){
-				if(user.logs.uri.indexOf(req.params.regex) > -1){
+				if(user.logs[i].uri.indexOf(reg) > -1){
 					logArray.push(user.logs[i]);
 				}
 			}

@@ -1,8 +1,8 @@
 
 app.config(['$routeProvider', function ($routeProvider) {
-        $routeProvider.when('/accesos/', {
-            templateUrl: "administrador/list.html",
-            controller: "ListAdministradoresController"
+        $routeProvider.when('/acciones/', {
+            templateUrl: "acciones/list.html",
+            controller: "ListAccionesController"
         });
     }
 ]);

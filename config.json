@@ -1,7 +1,8 @@
 {
 	"app":{
 		"name": "CyberCamp Project",
-		"port": 5555
+		"port": 5555,
+		"proxy_port": 80
 	},
 	"locale":{
 		"catalog": ["en", "es"],

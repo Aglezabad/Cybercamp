@@ -16,6 +16,8 @@
     "mongoose": "^3.8.20",
     "morgan": "~1.3.0",
     "serve-favicon": "~2.1.3",
-    "path": "latest"
+    "path": "latest",
+    "http-proxy": "~1.7.1",
+    "virustotal.js": "0.3.0"
   }
 }

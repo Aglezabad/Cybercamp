@@ -32,7 +32,7 @@ router.get('/:username', function(req, res, next){
 });
 
 /* GET contact of user */
-router.get('/:username/:name', function(req, res, next){
+router.get('/:username/filter-name/:name', function(req, res, next){
 	//Check session
 	if(!req.session.user){
 		var err = new Error("Forbidden.");
@@ -51,25 +51,30 @@ router.get('/:username/:name', function(req, res, next){
 			if(err){
 				return next(err);
 			}
+			var contactArray = [];
 			for(var i=0; i<user.contacts.length; i++){
 				if(user.contacts[i].name === req.params.name){
-					return res.status(200).send({
-						ok: true,
-						message: "Contact sent.",
-						contact: user.contacts[i]
-					});
+					contactArray.push(user.contacts[i]);
 				}
 			}
-			
-			// If no contact, return 404.
-			var err = new Error("Not found.");
-			err.status = 404;
-			return next(err);
+
+			if(contactArray.length === 0){
+				// If no contact, return 404.
+				var err = new Error("Not found.");
+				err.status = 404;
+				return next(err);
+			} else {
+				return res.status(200).send({
+					ok: true,
+					message: "Contacts sent.",
+					contacts: contactArray
+				});
+			}
 		});
 });
 
 /* GET contact of user */
-router.get('/:username/:telephone', function(req, res, next){
+router.get('/:username/filter-tel/:telephone', function(req, res, next){
 	//Check session
 	if(!req.session.user){
 		var err = new Error("Forbidden.");
@@ -88,26 +93,32 @@ router.get('/:username/:telephone', function(req, res, next){
 			if(err){
 				return next(err);
 			}
+			var contactArray = [];
 			for(var i=0; i<user.contacts.length; i++){
 				if(user.contacts[i].telephone === req.params.telephone){
-					return res.status(200).send({
-						ok: true,
-						message: "Contact sent.",
-						contact: user.contacts[i]
-					});
+					contactArray.push(user.contacts[i]);
 				}
 			}
-			
-			// If no contact, return 404.
-			var err = new Error("Not found.");
-			err.status = 404;
-			return next(err);
+
+			if(contactArray.length === 0){
+				// If no contact, return 404.
+				var err = new Error("Not found.");
+				err.status = 404;
+				return next(err);
+			} else {
+				return res.status(200).send({
+					ok: true,
+					message: "Contacts sent.",
+					contacts: contactArray
+				});
+			}
+
 		});
 });
 
 /* GET contact of user */
-router.get('/:username/:email', function(req, res, next){
-	//Check session
+router.get('/:username/filter-email/:email', function(req, res, next){
+		//Check session
 	if(!req.session.user){
 		var err = new Error("Forbidden.");
 		err.status = 403;
@@ -125,20 +136,25 @@ router.get('/:username/:email', function(req, res, next){
 			if(err){
 				return next(err);
 			}
+			var contactArray = [];
 			for(var i=0; i<user.contacts.length; i++){
 				if(user.contacts[i].email === req.params.email){
-					return res.status(200).send({
-						ok: true,
-						message: "Contact sent.",
-						contact: user.contacts[i]
-					});
+					contactArray.push(user.contacts[i]);
 				}
 			}
-			
-			// If no contact, return 404.
-			var err = new Error("Not found.");
-			err.status = 404;
-			return next(err);
+
+			if(contactArray.length === 0){
+				// If no contact, return 404.
+				var err = new Error("Not found.");
+				err.status = 404;
+				return next(err);
+			} else {
+				return res.status(200).send({
+					ok: true,
+					message: "Contacts sent.",
+					contacts: contactArray
+				});
+			}	
 		});
 });
 
@@ -205,7 +221,7 @@ router.post('/:username', function(req, res, next){
 });
 
 /* PUT contact of user */
-router.put('/:username/:name', function(req, res, next){
+router.put('/:username/filter-name/:name', function(req, res, next){
 	//Check session
 	if(!req.session.user){
 		var err = new Error("Forbidden.");
@@ -231,26 +247,31 @@ router.put('/:username/:name', function(req, res, next){
 			if(err){
 				return next(err);
 			}
+			var contact;
 			for(var i=0; i<user.contacts.length; i++){
 				if(user.contacts[i].name === req.params.name){
-					Contact.update({_id: user.contacts[i]._id}, {$set: contact), function(err){
-						return res.status(200).send({
-							ok: true,
-							message: "Contact updated."
-						});
-					});
+					contact = user.contacts[i];
 				}
 			}
+
+			if(!contact){
+				// If no contact, return 404.
+				var err = new Error("Not found.");
+				err.status = 404;
+				return next(err);
+			}
 			
-			// If no contact, return 404.
-			var err = new Error("Not found.");
-			err.status = 404;
-			return next(err);
+			Contact.update({_id: contact._id}, {$set: contact}, function(err){
+				return res.status(200).send({
+					ok: true,
+					message: "Contact updated."
+				});
+			});
 		});
 });
 
 /* PUT contact of user */
-router.put('/:username/:telephone', function(req, res, next){
+router.put('/:username/filter-tel/:telephone', function(req, res, next){
 	//Check session
 	if(!req.session.user){
 		var err = new Error("Forbidden.");
@@ -276,26 +297,31 @@ router.put('/:username/:telephone', function(req, res, next){
 			if(err){
 				return next(err);
 			}
+			var contact;
 			for(var i=0; i<user.contacts.length; i++){
 				if(user.contacts[i].telephone === req.params.telephone){
-					Contact.update({_id: user.contacts[i]._id}, {$set: contact), function(err){
-						return res.status(200).send({
-							ok: true,
-							message: "Contact updated."
-						});
-					});
+					contact = user.contacts[i];
 				}
 			}
+
+			if(!contact){
+				// If no contact, return 404.
+				var err = new Error("Not found.");
+				err.status = 404;
+				return next(err);
+			}
 			
-			// If no contact, return 404.
-			var err = new Error("Not found.");
-			err.status = 404;
-			return next(err);
+			Contact.update({_id: contact._id}, {$set: contact}, function(err){
+				return res.status(200).send({
+					ok: true,
+					message: "Contact updated."
+				});
+			});
 		});
 });
 
 /* PUT contact of user */
-router.put('/:username/:email', function(req, res, next){
+router.put('/:username/filter-email/:email', function(req, res, next){
 	//Check session
 	if(!req.session.user){
 		var err = new Error("Forbidden.");
@@ -321,21 +347,180 @@ router.put('/:username/:email', function(req, res, next){
 			if(err){
 				return next(err);
 			}
+			var contact;
 			for(var i=0; i<user.contacts.length; i++){
 				if(user.contacts[i].email === req.params.email){
-					Contact.update({_id: user.contacts[i]._id}, {$set: contact), function(err){
-						return res.status(200).send({
-							ok: true,
-							message: "Contact updated."
-						});
-					});
+					contact = user.contacts[i];
 				}
 			}
+
+			if(!contact){
+				// If no contact, return 404.
+				var err = new Error("Not found.");
+				err.status = 404;
+				return next(err);
+			}
 			
-			// If no contact, return 404.
-			var err = new Error("Not found.");
-			err.status = 404;
-			return next(err);
+			Contact.update({_id: contact._id}, {$set: contact}, function(err){
+				return res.status(200).send({
+					ok: true,
+					message: "Contact updated."
+				});
+			});
+		});
+});
+
+/* DELETE contact of user */
+router.delete('/:username/filter-name/:name', function(req, res, next){
+	//Check session
+	if(!req.session.user){
+		var err = new Error("Forbidden.");
+		err.status = 403;
+		return next(err);
+	}
+	if((req.session.user.username !== req.params.username) && !req.session.user.groupAdmin){
+		var err = new Error("Forbidden.");
+		err.status = 403;
+		return next(err);
+	}
+	//Check if updated data exists
+	if(!req.body.contact){
+		var err = new Error("Invalid request.");
+		err.status = 400;
+		return next(err);
+	}
+	//Get contact for update
+	var contact = JSON.parse(req.body.contact);
+	User.findOne({username: req.params.username})
+		.populate('contacts')
+		.exec(function(err, user){
+			if(err){
+				return next(err);
+			}
+
+			var contact;
+			for(var i=0; i<user.contacts.length; i++){
+				if(user.contacts[i].name === req.params.name){
+					contact = user.contacts[i];
+				}
+			}
+
+			if(!contact){
+				// If no contact, return 404.
+				var err = new Error("Not found.");
+				err.status = 404;
+				return next(err);
+			}
+
+			Contact.remove({_id: contact._id}).exec();
+			User.update({_id: user._id}, {$pull: { contacts: contact._id }}, function(err){
+				return res.status(200).send({
+					ok: true,
+					message: "Contact deleted."
+				});
+			});
+		});
+});
+
+/* DELETE contact of user */
+router.delete('/:username/filter-tel/:telephone', function(req, res, next){
+	//Check session
+	if(!req.session.user){
+		var err = new Error("Forbidden.");
+		err.status = 403;
+		return next(err);
+	}
+	if((req.session.user.username !== req.params.username) && !req.session.user.groupAdmin){
+		var err = new Error("Forbidden.");
+		err.status = 403;
+		return next(err);
+	}
+	//Check if updated data exists
+	if(!req.body.contact){
+		var err = new Error("Invalid request.");
+		err.status = 400;
+		return next(err);
+	}
+	//Get contact for update
+	var contact = JSON.parse(req.body.contact);
+	User.findOne({username: req.params.username})
+		.populate('contacts')
+		.exec(function(err, user){
+			if(err){
+				return next(err);
+			}
+			var contact;
+			for(var i=0; i<user.contacts.length; i++){
+				if(user.contacts[i].telephone === req.params.telephone){
+					contact = user.contacts[i];
+				}
+			}
+
+			if(!contact){
+				// If no contact, return 404.
+				var err = new Error("Not found.");
+				err.status = 404;
+				return next(err);
+			}
+
+			Contact.remove({_id: contact._id}).exec();
+			User.update({_id: user._id}, {$pull: { contacts: contact._id }}, function(err){
+				return res.status(200).send({
+					ok: true,
+					message: "Contact deleted."
+				});
+			});
+		});
+});
+
+/* DELETE contact of user */
+router.delete('/:username/filter-email/:email', function(req, res, next){
+	//Check session
+	if(!req.session.user){
+		var err = new Error("Forbidden.");
+		err.status = 403;
+		return next(err);
+	}
+	if((req.session.user.username !== req.params.username) && !req.session.user.groupAdmin){
+		var err = new Error("Forbidden.");
+		err.status = 403;
+		return next(err);
+	}
+	//Check if updated data exists
+	if(!req.body.contact){
+		var err = new Error("Invalid request.");
+		err.status = 400;
+		return next(err);
+	}
+	//Get contact for update
+	var contact = JSON.parse(req.body.contact);
+	User.findOne({username: req.params.username})
+		.populate('contacts')
+		.exec(function(err, user){
+			if(err){
+				return next(err);
+			}
+			var contact;
+			for(var i=0; i<user.contacts.length; i++){
+				if(user.contacts[i].email === req.params.email){
+					contact = user.contacts[i];
+				}
+			}
+
+			if(!contact){
+				// If no contact, return 404.
+				var err = new Error("Not found.");
+				err.status = 404;
+				return next(err);
+			}
+
+			Contact.remove({_id: contact._id}).exec();
+			User.update({_id: user._id}, {$pull: { contacts: contact._id }}, function(err){
+				return res.status(200).send({
+					ok: true,
+					message: "Contact deleted."
+				});
+			});
 		});
 });
 

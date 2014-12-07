@@ -16,6 +16,7 @@ var apiLogin = require('./routes/api_login');
 var apiLogout = require('./routes/api_logout');
 var apiRegister = require('./routes/api_register');
 var apiContacts = require('./routes/api_contacts');
+var apiLogs = require('./routes/api_logs');
 
 var app = express();
 
@@ -49,6 +50,7 @@ app.use('/'+app.locals.routes.prefix+'api/login', apiLogin);
 app.use('/'+app.locals.routes.prefix+'api/logout', apiLogout);
 app.use('/'+app.locals.routes.prefix+'api/register', apiRegister);
 app.use('/'+app.locals.routes.prefix+'api/contacts', apiContacts);
+app.use('/'+app.locals.routes.prefix+'api/logs', apiLogs);
 
 
 

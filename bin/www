@@ -16,7 +16,7 @@ var http = require('http');
 var proxy = httpProxy.createProxyServer({});
 var virustotal = require('virustotal.js');
 var fs   = require('fs');
-virustotal.setKey('07619252310403a90085da588803b11e98c23e3ec899b12fc5cc588507f82ec0');
+virustotal.setKey('__APIKEY__');
 
 var blacklist = ['facebook.com'];
 
